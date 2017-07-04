@@ -76,9 +76,31 @@ class SelectorBIC(ModelSelector):
         """
         warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-        # TODO implement model selection based on BIC scores
-        raise NotImplementedError
+        lowest_bic = float("inf")
+        best_model = self.base_model(self.min_n_components)
 
+        for n_component in range(self.min_n_components, self.max_n_components):
+            try:
+                model = GaussianHMM(n_components=n_component, covariance_type="diag", n_iter=1000,
+                                    random_state=self.random_state, verbose=False).fit(self.X, self.lengths)
+            
+                # p = m^2 + km - 1
+                # https://rdrr.io/cran/HMMpa/man/AIC_HMM.html
+                p = (n_component**2) + len(self.X) * n_component - 1
+
+                # BIC = -2 * logL + p * logN
+                logL = model.score(self.X, self.lengths)
+                logN = np.log(len(self.X))
+                bic = -2 * logL + p * logN
+            except:
+                bic = float("inf")
+                best_model = self.base_model(self.min_n_components)
+
+            if bic < lowest_bic:
+                lowest_bic = bic
+                best_model = model
+
+        return best_model
 
 class SelectorDIC(ModelSelector):
     ''' select best model based on Discriminative Information Criterion
