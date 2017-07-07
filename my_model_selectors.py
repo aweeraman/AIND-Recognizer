@@ -77,16 +77,16 @@ class SelectorBIC(ModelSelector):
         warnings.filterwarnings("ignore", category=DeprecationWarning)
 
         lowest_bic = float("inf")
-        best_model = self.base_model(self.min_n_components)
+        best_model = None
 
-        for n_component in range(self.min_n_components, self.max_n_components):
+        for n_component in range(self.min_n_components, self.max_n_components + 1):
             try:
                 model = GaussianHMM(n_components=n_component, covariance_type="diag", n_iter=1000,
                                     random_state=self.random_state, verbose=False).fit(self.X, self.lengths)
             
                 # p = m^2 + km - 1
                 # https://rdrr.io/cran/HMMpa/man/AIC_HMM.html
-                p = (n_component**2) + len(self.X) * n_component - 1
+                p = n_component**2 + self.X.shape[1] * n_component - 1
 
                 # BIC = -2 * logL + p * logN
                 logL = model.score(self.X, self.lengths)
@@ -94,7 +94,7 @@ class SelectorBIC(ModelSelector):
                 bic = -2 * logL + p * logN
             except:
                 bic = float("inf")
-                best_model = self.base_model(self.min_n_components)
+                best_model = None
 
             if bic < lowest_bic:
                 lowest_bic = bic
@@ -114,8 +114,39 @@ class SelectorDIC(ModelSelector):
     def select(self):
         warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-        # TODO implement model selection based on DIC scores
-        raise NotImplementedError
+        best_score = float("-inf")
+        best_model = None
+
+        #DIC = log(P(X(i)) - 1/(M-1)SUM(log(P(X(all but i))
+        m = len((self.words).keys())
+        
+        for n_component in range(self.min_n_components, self.max_n_components + 1):
+            try:
+                model = GaussianHMM(n_components=n_component, covariance_type="diag", n_iter=1000,
+                                    random_state=self.random_state, verbose=False).fit(self.X, self.lengths)
+                logPi = model.score(self.X, self.lengths)
+            except:
+                logPi = float("-inf")
+
+                logPiPrime = 0
+                for a_word in self.hwords.keys():
+                    try:
+                        X_word, X_lengths = self.hwords[a_word]
+                        logPiPrime += model.score(X_word, X_lengths)
+                    except:
+                        logPiPrime += 0
+
+                dic = logPi - (1/(m-1)) * logPiPrime - (0 if logPi == float("-inf") else logPi)
+
+                if dic > best_score:
+                    best_score = dic
+                    best_model = model
+
+        if best_model is None:
+            return self.base_model(self.n_constant)
+
+        return best_model
+
 
 
 class SelectorCV(ModelSelector):
