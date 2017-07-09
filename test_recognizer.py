@@ -7,6 +7,7 @@ from my_model_selectors import SelectorDIC
 from my_model_selectors import SelectorCV
 from my_model_selectors import SelectorConstant
 from asl_utils import show_errors
+from asl_utils import output_stats
 from my_recognizer import recognize
 
 asl = AslDb()
@@ -55,16 +56,13 @@ def train_all_words(features, model_selector):
     return model_dict
 
 # Choose a feature set and model selector
-features_list = [ features_ground, features_norm, features_polar, features_delta, features_custom_1, features_custom_2, features_custom_3 ]
 model_list = [ SelectorConstant, SelectorBIC, SelectorDIC, SelectorCV ]
+features_list = [ features_ground, features_norm, features_polar, features_delta, features_custom_1, features_custom_2, features_custom_3 ]
 
-for features in features_list:
-    for model_selector in model_list:
-        print("FEATURES {}".format(features))
-        print("MODEL {}".format(model_selector))
+print("{},{},{},{},{},{}".format("Model", "Features", "Number of Words", "Correct", "Total", "WER"))
+for model_selector in model_list:
+    for features in features_list:
         models = train_all_words(features, model_selector)
         test_set = asl.build_test(features)
         probabilities, guesses = recognize(models, test_set)
-        show_errors(guesses, test_set)
-        print("Number of word models returned = {}".format(len(models)))
-        print("-------------------------------------------------------------")
+        output_stats(guesses, test_set, model_selector, features)

@@ -1,0 +1,30 @@
+Model,Features,Number of Words,Correct,Total,WER
+<class 'my_model_selectors.SelectorConstant'>,grnd-rx + grnd-ry + grnd-lx + grnd-ly,178,59,178,0.6685393258426966
+<class 'my_model_selectors.SelectorConstant'>,norm-rx + norm-ry + norm-lx + norm-ly,178,67,178,0.6235955056179775
+<class 'my_model_selectors.SelectorConstant'>,polar-rr + polar-rtheta + polar-lr + polar-ltheta,178,68,178,0.6179775280898876
+<class 'my_model_selectors.SelectorConstant'>,delta-rx + delta-ry + delta-lx + delta-ly,178,64,178,0.6404494382022472
+<class 'my_model_selectors.SelectorConstant'>,grnd-rx + grnd-ry + grnd-lx + grnd-ly + polar-rr + polar-rtheta + polar-lr + polar-ltheta + delta-rx + delta-ry + delta-lx + delta-ly,178,72,178,0.5955056179775281
+<class 'my_model_selectors.SelectorConstant'>,norm-rx + norm-ry + norm-lx + norm-ly + polar-rr + polar-rtheta + polar-lr + polar-ltheta + delta-rx + delta-ry + delta-lx + delta-ly,178,83,178,0.5337078651685393
+<class 'my_model_selectors.SelectorConstant'>,grnd-rx + grnd-ry + grnd-lx + grnd-ly + norm-rx + norm-ry + norm-lx + norm-ly + polar-rr + polar-rtheta + polar-lr + polar-ltheta + delta-rx + delta-ry + delta-lx + delta-ly,178,77,178,0.5674157303370787
+<class 'my_model_selectors.SelectorBIC'>,grnd-rx + grnd-ry + grnd-lx + grnd-ly,178,80,178,0.550561797752809
+<class 'my_model_selectors.SelectorBIC'>,norm-rx + norm-ry + norm-lx + norm-ly,178,69,178,0.6123595505617978
+<class 'my_model_selectors.SelectorBIC'>,polar-rr + polar-rtheta + polar-lr + polar-ltheta,178,81,178,0.5449438202247191
+<class 'my_model_selectors.SelectorBIC'>,delta-rx + delta-ry + delta-lx + delta-ly,178,68,178,0.6179775280898876
+<class 'my_model_selectors.SelectorBIC'>,grnd-rx + grnd-ry + grnd-lx + grnd-ly + polar-rr + polar-rtheta + polar-lr + polar-ltheta + delta-rx + delta-ry + delta-lx + delta-ly,178,90,178,0.4943820224719101
+<class 'my_model_selectors.SelectorBIC'>,norm-rx + norm-ry + norm-lx + norm-ly + polar-rr + polar-rtheta + polar-lr + polar-ltheta + delta-rx + delta-ry + delta-lx + delta-ly,178,94,178,0.47191011235955055
+<class 'my_model_selectors.SelectorBIC'>,grnd-rx + grnd-ry + grnd-lx + grnd-ly + norm-rx + norm-ry + norm-lx + norm-ly + polar-rr + polar-rtheta + polar-lr + polar-ltheta + delta-rx + delta-ry + delta-lx + delta-ly,178,91,178,0.4887640449438202
+<class 'my_model_selectors.SelectorDIC'>,grnd-rx + grnd-ry + grnd-lx + grnd-ly,178,86,178,0.5168539325842697
+<class 'my_model_selectors.SelectorDIC'>,norm-rx + norm-ry + norm-lx + norm-ly,178,67,178,0.6235955056179775
+<class 'my_model_selectors.SelectorDIC'>,polar-rr + polar-rtheta + polar-lr + polar-ltheta,178,78,178,0.5617977528089888
+<class 'my_model_selectors.SelectorDIC'>,delta-rx + delta-ry + delta-lx + delta-ly,178,68,178,0.6179775280898876
+<class 'my_model_selectors.SelectorDIC'>,grnd-rx + grnd-ry + grnd-lx + grnd-ly + polar-rr + polar-rtheta + polar-lr + polar-ltheta + delta-rx + delta-ry + delta-lx + delta-ly,178,89,178,0.5
+<class 'my_model_selectors.SelectorDIC'>,norm-rx + norm-ry + norm-lx + norm-ly + polar-rr + polar-rtheta + polar-lr + polar-ltheta + delta-rx + delta-ry + delta-lx + delta-ly,178,96,178,0.4606741573033708
+<class 'my_model_selectors.SelectorDIC'>,grnd-rx + grnd-ry + grnd-lx + grnd-ly + norm-rx + norm-ry + norm-lx + norm-ly + polar-rr + polar-rtheta + polar-lr + polar-ltheta + delta-rx + delta-ry + delta-lx + delta-ly,178,92,178,0.48314606741573035
+<class 'my_model_selectors.SelectorCV'>,grnd-rx + grnd-ry + grnd-lx + grnd-ly,178,71,178,0.601123595505618
+<class 'my_model_selectors.SelectorCV'>,norm-rx + norm-ry + norm-lx + norm-ly,178,59,178,0.6685393258426966
+<class 'my_model_selectors.SelectorCV'>,polar-rr + polar-rtheta + polar-lr + polar-ltheta,178,72,178,0.5955056179775281
+<class 'my_model_selectors.SelectorCV'>,delta-rx + delta-ry + delta-lx + delta-ly,178,70,178,0.6067415730337079
+<class 'my_model_selectors.SelectorCV'>,grnd-rx + grnd-ry + grnd-lx + grnd-ly + polar-rr + polar-rtheta + polar-lr + polar-ltheta + delta-rx + delta-ry + delta-lx + delta-ly,178,76,178,0.5730337078651685
+<class 'my_model_selectors.SelectorCV'>,norm-rx + norm-ry + norm-lx + norm-ly + polar-rr + polar-rtheta + polar-lr + polar-ltheta + delta-rx + delta-ry + delta-lx + delta-ly,178,81,178,0.5449438202247191
+<class 'my_model_selectors.SelectorCV'>,grnd-rx + grnd-ry + grnd-lx + grnd-ly + norm-rx + norm-ry + norm-lx + norm-ly + polar-rr + polar-rtheta + polar-lr + polar-ltheta + delta-rx + delta-ry + delta-lx + delta-ly,178,83,178,0.5337078651685393
+

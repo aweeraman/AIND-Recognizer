@@ -90,6 +90,6 @@ def selector_CV():
             else:
                 print("Training failed for {}".format(word))
 
-selector_BIC()
+#selector_BIC()
 selector_DIC()
-selector_CV()
+#selector_CV()

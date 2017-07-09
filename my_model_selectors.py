@@ -117,30 +117,34 @@ class SelectorDIC(ModelSelector):
         best_score = float("-inf")
         best_model = None
 
-        #DIC = log(P(X(i)) - 1/(M-1)SUM(log(P(X(all but i))
         m = len((self.words).keys())
         
         for n_component in range(self.min_n_components, self.max_n_components + 1):
-            try:
-                model = GaussianHMM(n_components=n_component, covariance_type="diag", n_iter=1000,
-                                    random_state=self.random_state, verbose=False).fit(self.X, self.lengths)
-                logPi = model.score(self.X, self.lengths)
-            except:
-                logPi = float("-inf")
+                antiLogL = 0.0
+                count = 0
 
-                logPiPrime = 0
-                for a_word in self.hwords.keys():
-                    try:
-                        X_word, X_lengths = self.hwords[a_word]
-                        logPiPrime += model.score(X_word, X_lengths)
-                    except:
-                        logPiPrime += 0
+                try:
+                    model = GaussianHMM(n_components=n_component, covariance_type="diag", n_iter=1000,
+                                        random_state=self.random_state, verbose=False).fit(self.X, self.lengths)
+                    logL = model.score(self.X, self.lengths)
 
-                dic = logPi - (1/(m-1)) * logPiPrime - (0 if logPi == float("-inf") else logPi)
+                    for a_word in self.hwords:
+                        if a_word == self.this_word:
+                            continue
+                        X_word, a_word_lengths = self.hwords[a_word]
+                        antiLogL += model.score(X_word, a_word_lengths)
+                        count += 1
 
-                if dic > best_score:
-                    best_score = dic
-                    best_model = model
+                    antiLogL /= float(count)
+
+                    #DIC = log(P(X(i)) - 1/(M-1)SUM(log(P(X(all but i))
+                    dic = logL - (1/m-1) * antiLogL
+
+                    if dic > best_score:
+                        best_score = dic
+                        best_model = model
+                except:
+                    continue
 
         if best_model is None:
             return self.base_model(self.n_constant)
